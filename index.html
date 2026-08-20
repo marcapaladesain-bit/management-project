@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcapala New Lifestyle</title>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+<div class="brand">
+<button class="brand-logo-button" type="button" onclick="openLogoPicker()" title="Ganti logo">
+<img id="brandLogoImage" class="brand-logo-image hidden" alt="Logo Marcapala"/>
+<span id="brandLogoFallback">M</span>
+</button>
+<input id="logoPicker" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden onchange="handleLogoUpload(event)"/>
+<div>
+<strong>MARCAPALA</strong>
+<small>MANAGEMENT</small>
+</div>
+</div>
+<nav>
+<button class="menu active" onclick="showPage('dashboard', this)">
+<span>⌂</span>
+                Dashboard
+            </button>
+<button class="menu" onclick="showPage('orders', this)">
+<span>▣</span>
+                Order
+            </button>
+<button class="menu" onclick="showPage('production', this)">
+<span>⚙</span>
+                Produksi
+            </button>
+<button class="menu" onclick="showPage('customers', this)">
+<span>♙</span>
+                Pelanggan
+            </button>
+<button class="menu" onclick="showPage('finance', this)">
+<span>Rp</span>
+                Keuangan
+            </button>
+</nav>
+<div class="sidebar-bottom">
+<small>Marcapala New Lifestyle</small>
+<span>V1.0</span>
+</div>
+</aside>
+<!-- MAIN -->
+<main class="main">
+<!-- HEADER -->
+<header class="topbar">
+<div>
+<h1 id="pageTitle">Dashboard</h1>
+<p>Kelola proses percetakan dengan lebih mudah.</p>
+</div>
+<button class="primary-btn" onclick="showPage('orders')">
+                + Order Baru
+            </button>
+</header>
+<!-- DASHBOARD -->
+<section class="page" id="dashboard">
+<div class="stats">
+<div class="stat-card">
+<div class="stat-icon">▣</div>
+<div>
+<small>Total Order</small>
+<h2 id="totalOrder">0</h2>
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">⚙</div>
+<div>
+<small>Produksi</small>
+<h2 id="totalProduction">0</h2>
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">✓</div>
+<div>
+<small>Selesai</small>
+<h2 id="totalFinished">0</h2>
+</div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">Rp</div>
+<div>
+<small>Omzet</small>
+<h2 id="totalRevenue">Rp0</h2>
+</div>
+</div>
+</div>
+<div class="content-card">
+<div class="card-header">
+<div>
+<h2>Order Terbaru</h2>
+<p>Daftar pesanan terbaru Anda.</p>
+</div>
+<button class="text-btn" onclick="showPage('orders')">
+                        Lihat Semua
+                    </button>
+</div>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Pelanggan</th>
+<th>Produk</th>
+<th>Total</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody id="orderTable">
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- ORDER -->
+<section class="page hidden" id="orders">
+<div class="content-card">
+<div class="card-header">
+<div>
+<h2>Buat Order Baru</h2>
+<p>Masukkan data pesanan pelanggan.</p>
+</div>
+</div>
+<form id="orderForm">
+<div class="form-grid">
+<div class="form-group">
+<label>Nama Pelanggan *</label>
+<input id="customerName" placeholder="Contoh: Budi" required="" type="text"/>
+</div>
+<div class="form-group">
+<label>No. WhatsApp</label>
+<input id="customerPhone" placeholder="08xxxxxxxxxx" type="text"/>
+</div>
+<div class="form-group">
+<label>Produk *</label>
+<input id="productName" placeholder="Contoh: Kaos Custom" required="" type="text"/>
+</div>
+<div class="form-group">
+<label>Jumlah *</label>
+<input id="quantity" min="1" placeholder="Contoh: 24" required="" type="number"/>
+</div>
+<div class="form-group">
+<label>Total Harga *</label>
+<input id="totalPrice" min="0" placeholder="Contoh: 650000" required="" type="number"/>
+</div>
+<div class="form-group">
+<label>DP</label>
+<input id="deposit" min="0" placeholder="Contoh: 300000" type="number" value="0"/>
+</div>
+<div class="form-group">
+<label>Deadline</label>
+<input id="deadline" type="date"/>
+</div>
+<div class="form-group">
+<label>Status Awal</label>
+<select id="orderStatus">
+<option value="BARU">
+        Order Baru
+    </option>
+<option value="DESAIN">
+        Desain
+    </option>
+<option value="ACC">
+        ACC Desain
+    </option>
+<option value="PRODUKSI">
+        Produksi
+    </option>
+<option value="QC">
+        QC
+    </option>
+<option value="PACKING">
+        Packing
+    </option>
+<option value="SELESAI">
+        Selesai
+    </option>
+</select>
+
+</div>
+<div class="form-group full">
+<label>Catatan</label>
+<textarea id="notes" placeholder="Catatan pesanan..." rows="4"></textarea>
+</div>
+</div>
+<div class="form-actions">
+<button class="secondary-btn" type="reset">
+                            Reset
+                        </button>
+<button class="primary-btn" type="submit">
+                            Simpan Order
+                        </button>
+</div>
+</form>
+</div>
+<div class="content-card">
+<div class="card-header">
+<div>
+<h2>Semua Order</h2>
+<p>Daftar seluruh pesanan.</p>
+</div>
+</div>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Pelanggan</th>
+<th>Produk</th>
+<th>Jumlah</th>
+<th>Total</th>
+<th>Sisa</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody id="allOrderTable">
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- PRODUKSI -->
+<section class="page hidden" id="production">
+<div class="content-card">
+<div class="card-header">
+<div>
+<h2>Alur Produksi</h2>
+<p>Pantau proses setiap pesanan.</p>
+</div>
+</div>
+<div class="kanban">
+<div class="kanban-column">
+<div class="kanban-title">
+<span>ORDER BARU</span>
+<b id="countBaru">0</b>
+</div>
+<div id="kanbanBaru"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>DESAIN</span>
+<b id="countDesain">0</b>
+</div>
+<div id="kanbanDesain"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>ACC DESAIN</span>
+<b id="countAcc">0</b>
+</div>
+<div id="kanbanAcc"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>PRODUKSI</span>
+<b id="countProduksi">0</b>
+</div>
+<div id="kanbanProduksi"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>QC</span>
+<b id="countQc">0</b>
+</div>
+<div id="kanbanQc"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>PACKING</span>
+<b id="countPacking">0</b>
+</div>
+<div id="kanbanPacking"></div>
+</div>
+<div class="kanban-column">
+<div class="kanban-title">
+<span>SELESAI</span>
+<b id="countSelesai">0</b>
+</div>
+<div id="kanbanSelesai"></div>
+</div>
+</div>
+<!-- PELANGGAN -->
+
+<!-- KEUANGAN -->
+
+</div></section><section class="page hidden" id="customers">
+<div class="content-card">
+<div class="card-header customer-header">
+<div>
+<h2>Pelanggan</h2>
+<p>Database pelanggan Marcapala.</p>
+</div>
+<div class="customer-search">
+<span class="search-icon">⌕</span>
+<input id="customerSearch" type="search" placeholder="Cari nama atau nomor HP..." oninput="renderCustomers()" autocomplete="off"/>
+<button class="secondary-btn" type="button" onclick="clearCustomerSearch()">Reset</button>
+</div>
+</div>
+<div class="customer-search-note" id="customerSearchNote">Menampilkan semua pelanggan.</div>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Nama</th>
+<th>WhatsApp</th>
+<th>Total Order</th>
+<th>Total Transaksi</th>
+</tr>
+</thead>
+<tbody id="customerTable">
+</tbody>
+</table>
+</div>
+</div>
+</section><section class="page hidden finance-page" id="finance">
+<div class="finance-toolbar">
+<div>
+<span class="finance-eyebrow">FINANCIAL OVERVIEW</span>
+<h2>Dashboard Keuangan</h2>
+<p>Pantau arus kas, omzet, piutang, dan transaksi Marcapala.</p>
+</div>
+<div class="finance-actions">
+<button class="secondary-btn" onclick="openFinanceForm('income')">+ Pemasukan</button>
+<button class="primary-btn" onclick="openFinanceForm('expense')">+ Pengeluaran</button>
+</div>
+</div>
+<div class="finance-filter content-card">
+<div class="finance-filter-row">
+<div class="form-group"><label>Periode</label><select id="financePeriod" onchange="renderFinance()"><option value="all">Semua Waktu</option><option value="month">Bulan Ini</option><option value="year">Tahun Ini</option></select></div>
+<div class="form-group"><label>Jenis</label><select id="financeTypeFilter" onchange="renderFinance()"><option value="all">Semua Transaksi</option><option value="income">Pemasukan</option><option value="expense">Pengeluaran</option><option value="order">Order</option></select></div>
+<div class="finance-period-note" id="financePeriodNote">Data keuangan tersinkron dengan order dan transaksi kas.</div>
+</div>
+</div>
+<div class="finance-stats">
+<div class="finance-stat-card"><span class="finance-stat-icon">↗</span><div><small>Total Omzet</small><h2 id="financeRevenue">Rp0</h2><em id="financeRevenueSub">Dari seluruh order</em></div></div>
+<div class="finance-stat-card"><span class="finance-stat-icon">＋</span><div><small>Kas Masuk</small><h2 id="financeCashIn">Rp0</h2><em id="financeCashInSub">DP + pemasukan</em></div></div>
+<div class="finance-stat-card"><span class="finance-stat-icon expense">−</span><div><small>Pengeluaran</small><h2 id="financeCashOut">Rp0</h2><em>Transaksi biaya operasional</em></div></div>
+<div class="finance-stat-card highlight"><span class="finance-stat-icon">Rp</span><div><small>Saldo Kas</small><h2 id="financeBalance">Rp0</h2><em id="financeBalanceSub">Kas masuk - pengeluaran</em></div></div>
+<div class="finance-stat-card"><span class="finance-stat-icon">!</span><div><small>Total Piutang</small><h2 id="financeDebt">Rp0</h2><em id="financeDebtSub">Sisa pembayaran order</em></div></div>
+</div>
+<div class="finance-grid">
+<div class="content-card finance-chart-card">
+<div class="card-header"><div><h2>Arus Kas</h2><p>Pemasukan dan pengeluaran per bulan.</p></div><span class="finance-badge">6 BULAN</span></div>
+<div class="chart-wrap"><canvas height="240" id="financeChart"></canvas></div>
+</div>
+<div class="content-card finance-summary-card">
+<div class="card-header"><div><h2>Ringkasan</h2><p>Kondisi keuangan saat ini.</p></div></div>
+<div class="summary-list">
+<div><span>Nilai seluruh order</span><strong id="financeOrderValue">Rp0</strong></div>
+<div><span>Total DP diterima</span><strong id="financeDeposit">Rp0</strong></div>
+<div><span>Jumlah order</span><strong id="financeOrderCount">0</strong></div>
+<div><span>Transaksi kas</span><strong id="financeCashCount">0</strong></div>
+</div>
+</div>
+</div>
+<div class="content-card monthly-recap-card">
+<div class="card-header">
+<div><h2>Rekap Order Per Bulan</h2><p>Pilih periode untuk melihat jumlah order, omzet, DP, dan piutang.</p></div>
+<div class="monthly-recap-controls">
+<div class="form-group compact"><label>Bulan</label><input id="recapMonth" type="month" onchange="renderMonthlyRecap()"/></div>
+<button class="primary-btn" type="button" onclick="exportMonthlyOrdersExcel()">⬇ Download Excel</button>
+</div>
+</div>
+<div class="monthly-recap-stats">
+<div><small>Total Order</small><strong id="recapOrderCount">0</strong></div>
+<div><small>Omzet</small><strong id="recapRevenue">Rp0</strong></div>
+<div><small>Total DP</small><strong id="recapDeposit">Rp0</strong></div>
+<div><small>Piutang</small><strong id="recapDebt">Rp0</strong></div>
+</div>
+<div class="table-wrapper"><table><thead><tr><th>Order</th><th>Tanggal</th><th>Pelanggan</th><th>WhatsApp</th><th>Produk</th><th>Jumlah</th><th>Total</th><th>DP</th><th>Sisa</th><th>Status</th></tr></thead><tbody id="monthlyRecapTable"></tbody></table></div>
+</div>
+<div class="content-card">
+<div class="card-header"><div><h2>Riwayat Keuangan</h2><p>Order, pemasukan, dan pengeluaran dalam satu laporan.</p></div><div class="finance-export-actions"><button class="text-btn" onclick="exportFinanceCSV()">Export CSV</button><button class="text-btn" onclick="exportMonthlyOrdersExcel()">Rekap Order Excel</button></div></div>
+<div class="table-wrapper"><table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Referensi</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="financeTable"></tbody></table></div>
+</div>
+<div class="finance-modal hidden" id="financeModal">
+<div class="finance-modal-content">
+<div class="modal-header"><div><small>TRANSAKSI KAS</small><h2 id="financeModalTitle">Tambah Pemasukan</h2></div><button class="close-btn" onclick="closeFinanceForm()">×</button></div>
+<form id="financeForm"><input id="financeEditId" type="hidden"/><input id="financeEntryType" type="hidden"/>
+<div class="form-grid">
+<div class="form-group"><label>Tanggal *</label><input id="financeDate" required="" type="date"/></div>
+<div class="form-group"><label>Nominal *</label><input id="financeAmount" min="1" placeholder="Contoh: 250000" required="" type="number"/></div>
+<div class="form-group"><label>Kategori</label><select id="financeCategory"><option>Penjualan</option><option>DP Order</option><option>Pelunasan</option><option>Operasional</option><option>Bahan/Produksi</option><option>Transportasi</option><option>Konsumsi</option><option>Lainnya</option></select></div>
+<div class="form-group"><label>Referensi</label><input id="financeReference" placeholder="Contoh: KAS-001" type="text"/></div>
+<div class="form-group full"><label>Keterangan</label><textarea id="financeDescription" placeholder="Keterangan transaksi..." rows="3"></textarea></div>
+</div>
+<div class="form-actions"><button class="secondary-btn" onclick="closeFinanceForm()" type="button">Batal</button><button class="primary-btn" type="submit">Simpan Transaksi</button></div>
+</form>
+</div>
+</div>
+</section></main>
+</div>
+<!-- DETAIL ORDER MODAL -->
+<div class="modal hidden" id="orderModal">
+<div class="modal-content">
+<div class="modal-header">
+<div>
+<small>DETAIL ORDER</small>
+<h2 id="modalOrderId">ORD-000</h2>
+</div>
+<button class="close-btn" onclick="closeOrderModal()">
+                ×
+            </button>
+</div>
+<div class="detail-grid"><div class="detail-item">
+<small>Status Desain</small>
+<strong id="modalDesignStatus">
+        -
+    </strong>
+</div>
+<div class="detail-item">
+<small>Desainer</small>
+<strong id="modalDesigner">
+        -
+    </strong>
+</div>
+<div class="detail-item">
+<small>PIC Produksi</small>
+<strong id="modalProductionPIC">
+        -
+    </strong>
+</div>
+<div class="detail-item full">
+<small>Catatan Produksi</small>
+<strong id="modalProductionNotes">
+        -
+    </strong>
+</div>
+<div class="detail-item full">
+<small>File Desain</small>
+<strong id="modalDesignFile">
+        Belum ada file
+    </strong>
+</div>
+<div class="detail-item">
+<small>Pelanggan</small>
+<strong id="modalCustomer">-</strong>
+</div>
+<div class="detail-item">
+<small>WhatsApp</small>
+<strong id="modalPhone">-</strong>
+</div>
+<div class="detail-item">
+<small>Produk</small>
+<strong id="modalProduct">-</strong>
+</div>
+<div class="detail-item">
+<small>Jumlah</small>
+<strong id="modalQuantity">-</strong>
+</div>
+<div class="detail-item">
+<small>Deadline</small>
+<strong id="modalDeadline">-</strong>
+</div>
+<div class="detail-item">
+<small>Status</small>
+<strong id="modalStatus">-</strong>
+</div>
+<div class="detail-item">
+<small>Total Harga</small>
+<strong id="modalPrice">-</strong>
+</div>
+<div class="detail-item">
+<small>DP</small>
+<strong id="modalDeposit">-</strong>
+</div>
+<div class="detail-item">
+<small>Sisa Pembayaran</small>
+<strong id="modalRemaining">-</strong>
+</div>
+<div class="detail-item full">
+<small>Catatan</small>
+<strong id="modalNotes">-</strong>
+</div>
+</div>
+<div class="order-finance-actions">
+<button type="button" class="secondary-btn" onclick="addOrderPaymentFromModal()">💳 Tambah Pembayaran</button>
+<button type="button" class="primary-btn" onclick="printOrderInvoice(selectedOrderId)">🧾 Cetak Invoice</button>
+</div>
+<div class="modal-status">
+<label>Ubah Status Produksi</label>
+<select id="modalStatusSelect" onchange="changeStatusFromModal()">
+<option value="BARU">
+                    Order Baru
+                </option>
+<option value="DESAIN">
+                    Desain
+                </option>
+<option value="ACC">
+                    ACC Desain
+                </option>
+<option value="PRODUKSI">
+                    Produksi
+                </option>
+<option value="QC">
+                    QC
+                </option>
+<option value="PACKING">
+                    Packing
+                </option>
+<option value="SELESAI">
+                    Selesai
+                </option>
+</select>
+</div>
+</div>
+</div>
+
+<!-- MODAL PEMBAYARAN ORDER -->
+<div id="paymentModal" class="custom-modal hidden" aria-hidden="true">
+  <div class="custom-modal-backdrop" onclick="closePaymentModal()"></div>
+  <div class="payment-modal-card" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle">
+    <div class="payment-modal-head">
+      <div>
+        <span class="payment-modal-kicker">PEMBAYARAN ORDER</span>
+        <h2 id="paymentModalTitle">Tambah Pembayaran</h2>
+        <p id="paymentModalInfo">-</p>
+      </div>
+      <button type="button" class="modal-close-btn" onclick="closePaymentModal()" aria-label="Tutup">×</button>
+    </div>
+    <form id="paymentForm" onsubmit="submitOrderPayment(event)">
+      <div class="payment-summary">
+        <div><small>Total Order</small><strong id="paymentTotal">Rp0</strong></div>
+        <div><small>Sudah Dibayar</small><strong id="paymentPaid">Rp0</strong></div>
+        <div><small>Sisa Pembayaran</small><strong id="paymentRemaining">Rp0</strong></div>
+      </div>
+      <div class="payment-form-grid">
+        <div class="form-group">
+          <label for="paymentAmount">Nominal Pembayaran *</label>
+          <input id="paymentAmount" type="number" min="1" step="1" required placeholder="Contoh: 250000">
+        </div>
+        <div class="form-group">
+          <label for="paymentDate">Tanggal Pembayaran *</label>
+          <input id="paymentDate" type="date" required>
+          <small class="input-help">Klik kolom tanggal untuk memilih dari kalender.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="paymentNote">Keterangan</label>
+        <input id="paymentNote" type="text" maxlength="120" placeholder="Contoh: Pelunasan order">
+      </div>
+      <div class="payment-modal-actions">
+        <button type="button" class="secondary-btn" onclick="closePaymentModal()">Batal</button>
+        <button type="submit" class="primary-btn">💳 Simpan Pembayaran</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
